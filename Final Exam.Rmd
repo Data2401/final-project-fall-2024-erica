@@ -1,0 +1,18 @@
+---
+title: "Coffee"
+author: "Erica Galvan"
+date: "2024-11-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+coffee_survey <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-05-14/coffee_survey.csv')
+```
+
+```{r}
+(coffee_survey)
+
+
+
+```
