@@ -8,11 +8,41 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 coffee_survey <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-05-14/coffee_survey.csv')
+library(tidyverse)
+library(ggplot2)
 ```
 
 ```{r}
-(coffee_survey)
 
-
-
+#QUESTION: WHAT IS THE PREFERRED ROAST LEVEL?"
+coffee_survey %>% 
+  filter(!is.na('Between Coffee A, Coffee B, and Coffee C which did you prefer?')) %>% 
+  ggplot(aes('Between Coffee A, Coffee B, and Coffee C which did you prefer?')) 
 ```
+  
+
+
+*Questions*
+How can I clean up this dataset to answer my questions in more simple way?
+
+
+
+
+*NOTES*
+Introduce what the data is(where it comes from)
+-Why is it important?
+-What features?
+*Next, highlight the questions you will be asking.
+
+
+*Questions*
+Where do people brew their coffee? How is it brewed (make relation?)
+
+What is the most popular coffee roast(gender + age)?
+
+#Between Coffee A, Coffee B, and Coffee C which did you prefer?
+#Between Coffee A and Coffee D, which did you prefer?
+#Favorite Overall Coffee
+
+What are the preferences between popular coffee between gender?
+
