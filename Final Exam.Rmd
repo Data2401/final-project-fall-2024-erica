@@ -16,8 +16,8 @@ library(ggplot2)
 
 #QUESTION: WHAT IS THE PREFERRED ROAST LEVEL?"
 coffee_survey %>% 
-  filter(!is.na('Between Coffee A, Coffee B, and Coffee C which did you prefer?')) %>% 
-  ggplot(aes('Between Coffee A, Coffee B, and Coffee C which did you prefer?')) 
+  filter(!is.na(prefer_abc)) %>% 
+  ggplot(aes(x = prefer_abc, fill = prefer_abc)) + geom_bar() + scale_fill_manual( values = c("brown", "black", "yellow"))
 ```
   
 
