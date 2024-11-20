@@ -12,18 +12,28 @@ library(tidyverse)
 library(ggplot2)
 ```
 
+
+```{r}
+#Defining each coffee A, B, C, and D by their defined roast level. (Light roast, medium, dark, light
+roast_colors = c(
+  "sandybrown", #COFFEE A = light roast
+  "tan3", #COFFEE B = medium roast
+  "tan4", #COFFEE C = dark roast
+  "sandybrown" #COFFEE D = light roast 
+)
+
+```
+
+
 ```{r}
 
 #QUESTION: WHAT IS THE PREFERRED ROAST LEVEL?"
 coffee_survey %>% 
   filter(!is.na(prefer_abc)) %>% 
-  ggplot(aes(x = prefer_abc, fill = prefer_abc)) + geom_bar() + scale_fill_manual( values = c("brown", "black", "yellow"))
+  ggplot(aes(x = prefer_abc, fill = prefer_abc)) + geom_bar() + scale_fill_manual( values = c("sandybrown", "tan3", "tan4"))
 ```
   
 
-
-*Questions*
-How can I clean up this dataset to answer my questions in more simple way?
 
 
 
