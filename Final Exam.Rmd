@@ -10,16 +10,18 @@ knitr::opts_chunk$set(echo = TRUE)
 coffee_survey <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-05-14/coffee_survey.csv')
 library(tidyverse)
 library(ggplot2)
+library(dplyr)
 ```
+
 
 
 ```{r}
 #Defining each coffee A, B, C, and D by their defined roast level. (Light roast, medium, dark, light
 roast_colors = c(
-  "sandybrown", #COFFEE A = light roast
+  "peru", #COFFEE A = light roast
   "tan3", #COFFEE B = medium roast
   "tan4", #COFFEE C = dark roast
-  "sandybrown" #COFFEE D = light roast 
+  "tan" #COFFEE D = light roast 
 )
 
 ```
@@ -28,15 +30,32 @@ roast_colors = c(
 ```{r}
 
 #QUESTION: WHAT IS THE PREFERRED ROAST LEVEL?"
+
 coffee_survey %>% 
   filter(!is.na(prefer_abc)) %>% 
-  ggplot(aes(x = prefer_abc, fill = prefer_abc)) + geom_bar() + scale_fill_manual( values = c("sandybrown", "tan3", "tan4"))
+  ggplot(aes(x = prefer_abc, fill = prefer_abc)) + geom_bar() + scale_fill_manual( values = c("tan", "tan3", "saddlebrown"))
 ```
   
 
+```{r}
+coffee_survey %>% 
+  filter(!is.na(prefer_ad)) %>% 
+  ggplot(aes(x = prefer_ad, fill = prefer_ad)) + geom_bar() + scale_fill_manual( values = c("tan", "peachpuff3"))
+  labs( title = "Coffee Preference: A or D?",
+    x = "Preference",
+    y = "Count"
+  )
+
+
+```
+
+
+```{r}
 
 
 
+
+```
 
 *NOTES*
 Introduce what the data is(where it comes from)
