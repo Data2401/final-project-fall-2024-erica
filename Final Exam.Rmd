@@ -44,7 +44,7 @@ names(coffee_survey)
 
 
 
-# Where do they drink coffee?
+# Where/Why do they drink coffee?
 ```{r echo = FALSE}
 coffee_data1 <- data.frame(
   Location = c("At home", "At the office", "At a cafe", "On the go", "None of these"),
@@ -74,10 +74,9 @@ why_coffee <- data.frame(
   Percentage = c(94, 57, 54, 13, 5)
 )
 
-ggplot(why_coffee, aes(x = reorder(Reason, Percentage), y = Percentage, fill = Percentage)) +
+ggplot(why_coffee, aes(x = reorder(Reason, -Percentage), y = Percentage, fill = Percentage)) +
   geom_bar(stat = "identity", width = 0.7, color = "black") +
-  geom_text(aes(label = paste0(Percentage, "%")), hjust = -0.2) + 
-  coord_flip() +
+  geom_text(aes(label = paste0(Percentage, "%")), vjust = -0.5) + 
   labs(
     title = "Why Do You Drink Coffee?",
     x = NULL,
@@ -86,10 +85,8 @@ ggplot(why_coffee, aes(x = reorder(Reason, Percentage), y = Percentage, fill = P
   scale_fill_gradient(low = "Dark Olive Green 4", high = "Dark Olive Green 1") + 
   theme_minimal(base_size = 14) +
   theme(
-    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"), 
-    legend.position = "none" )
-
-
+    legend.position = "none"
+  )
 
 ```
 
@@ -136,8 +133,6 @@ ggplot(coffee_adds, aes(x = Percentage, y = reorder(CoffeeAdds, Percentage), fil
     y = ""
   ) +
   theme_minimal() 
-  )
-
 
 ```
 
@@ -199,39 +194,6 @@ coffee_survey %>%
 
 
 ```
+# Conclusion 
 
-# What does the consumer generally add to their coffee?
-```{r}
- 
-
-
-
-```
-
-
-```{r}
-
-
-
-
-```
-
-
-*NOTES*
-Introduce what the data is(where it comes from)
--Why is it important?
--What features?
-*Next, highlight the questions you will be asking.
-
-
-*Questions*
-Where do people brew their coffee? How is it brewed (make relation?)
-
-What is the most popular coffee roast(gender + age)?
-
-#Between Coffee A, Coffee B, and Coffee C which did you prefer?
-#Between Coffee A and Coffee D, which did you prefer?
-#Favorite Overall Coffee
-
-What are the preferences between popular coffee between gender?
 
