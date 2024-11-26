@@ -4,7 +4,10 @@ author: "Erica Galvan"
 date: "2024-11-12"
 output: html_document
 ---
+*Introduction*
 
+
+*Load Packages and Data*
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 coffee_survey <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-05-14/coffee_survey.csv')
@@ -13,38 +16,70 @@ library(ggplot2)
 library(dplyr)
 ```
 
+*Data Source*
+-Link to Data
+-Explaning the source and concepts of how the survey was taken 
+-Explain the experiment that was done
 
+*Questions*
+Who typically drinks coffee?
+-What does the consumer generally add to their coffee?
+-Where do they drink coffee?
+Why do they drink?
+-Compare the surveyers' preferences based on the results 
 
 ```{r}
-#Defining each coffee A, B, C, and D by their defined roast level. (Light roast, medium, dark, light
-roast_colors = c(
-  "peru", #COFFEE A = light roast
-  "tan3", #COFFEE B = medium roast
-  "tan4", #COFFEE C = dark roast
-  "tan" #COFFEE D = light roast 
-)
+#HOW DOES THE CONSUMER DRINK COFFEE 
+
 
 ```
 
-
 ```{r}
-
-#QUESTION: WHAT IS THE PREFERRED ROAST LEVEL?"
-
+#QUESTION: WHAT IS THE PREFERRED ROAST LEVEL?" * add counts to the amount 
 coffee_survey %>% 
   filter(!is.na(prefer_abc)) %>% 
-  ggplot(aes(x = prefer_abc, fill = prefer_abc)) + geom_bar() + scale_fill_manual( values = c("tan", "tan3", "saddlebrown"))
+  ggplot(aes(x = prefer_abc, fill = prefer_abc)) + geom_bar() + scale_fill_manual( values = c("tan", "tan3", "saddlebrown"))+
+  labs(title = "Coffee Preference: A, B, or C?", 
+       x = NULL,
+       y = "Count")+ 
+  geom_text(stat = "count", aes(label = ..count..), vjust = -0.3, color = "black", size = 4)
 ```
   
 
 ```{r}
+#QUESTION: WHAT IS THE PREFERENCE BETWEEN A / D? * ADD COUNT AMOUNTS 
 coffee_survey %>% 
   filter(!is.na(prefer_ad)) %>% 
-  ggplot(aes(x = prefer_ad, fill = prefer_ad)) + geom_bar() + scale_fill_manual( values = c("tan", "peachpuff3"))
+  ggplot(aes(x = prefer_ad, fill = prefer_ad)) + geom_bar() + scale_fill_manual( values = c("tan", "peachpuff3"))+
   labs( title = "Coffee Preference: A or D?",
-    x = "Preference",
+    x = NULL,
     y = "Count"
-  )
+  )+ geom_text(stat = "count", aes(label = ..count..), vjust = -0.3, color = "black", size = 4)
+
+
+```
+
+
+```{r}
+#Overall Preference Between them all?
+
+ coffee_survey%>% 
+ filter(!is.na(prefer_overall)) %>%
+ ggplot(aes(prefer_overall)) +
+ geom_bar(fill= c("tan", "tan3", "saddlebrown", "peachpuff3")) +
+ labs(y='Count',
+      x = NULL,
+      title='Preferred Coffee Between A, B, C or D?')+ 
+  geom_text(stat = "count", aes(label = ..count..), vjust = -0.3, color = "black", size = 4)
+
+
+
+```
+
+
+```{r}
+#WHAT DOES THE CONSUSMER ADD TO THE COFFEE 
+
 
 
 ```
@@ -56,6 +91,23 @@ coffee_survey %>%
 
 
 ```
+
+
+```{r}
+
+
+
+
+```
+
+
+```{r}
+
+
+
+
+```
+
 
 *NOTES*
 Introduce what the data is(where it comes from)
