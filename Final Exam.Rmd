@@ -1,7 +1,7 @@
 ---
 title: "Great American Coffee Taste Test "
 author: "Erica Galvan"
-date: "2024-11-26"
+date: "December 3, 2024"
 output:
   slidy_presentation:
     fig_height: 6
@@ -11,7 +11,7 @@ output:
 ---
 # Introduction
 * Coffee expert, "World Champion Barista" and Youtuber 'James Hoffman' partnered with Cometeer, a flash frozen coffee pod delivery service.  
-* Live coffee taste test held on Youtube. Viewers who participated were asked to fill out a survey based on 4 coffee samples they received. 
+* James held a live coffee taste test held on Youtube. Viewers who participated were asked to fill out a survey based on 4 coffee samples they received. 
 
 # Load Packages and Data
 ```{r}
@@ -23,50 +23,42 @@ library(dplyr)
 ```
 
 # Data Source Info
-* Link to Github: 
- https://github.com/rfordatascience/tidytuesday/blob/master/data/2024/2024-05-14/readme.md
-
-* Survey was voluntary
-* Taste test was a follow along live stream. Essentially everyone who participated had the same tasting experience.
+* Received 4000 responses.
+* Survey was voluntary.
+* Taste test was a follow along live stream on Youtube. Essentially everyone who participated had the same tasting experience.
 
 # Info at Glance 
 ```{r}
 names(coffee_survey)
-
-
+#I share the variable names at a glance because these are the few additions I am working with. 
 ```
 
 # Questions
 * Where/Why do they drink coffee?
 * How do they brew their coffee?
 * What does the consumer generally add to their coffee?
-* What is the preferred coffee from the test? 
-* Comparison between results! 
-
+* What was the most popular coffee from the survey? 
 
 
 # Where do they drink coffee?
-```{r echo = FALSE}
-coffee_data1 <- data.frame(
-  Location = c("At home", "At the office", "At a cafe", "On the go", "None of these"),
-  Percentage = c(92, 36, 29, 18, 1)
-)
-ggplot(coffee_data1, aes(x = reorder(Location, -Percentage), y = Percentage, fill = Percentage)) +
-  geom_bar(stat = "identity", color = "black") +
-  geom_text(aes(label = paste0(Percentage, "%")), vjust = -0.5, size = 4.5) +
-  scale_y_continuous(limits = c(0, 100), expand = c(0, 0)) +
-  scale_fill_gradient(low = "Medium Purple 1", high = "Medium Purple 4") +  
-  labs(
-    title = "Where do you Brew Coffee?",
-    x = NULL, y = "Percent of Respondents"
-  ) +
+Asking this question was important because I wanted to find out where do the surveyors usually drink their coffee? Initially this plays part in how the customer enjoys their coffee experience. I created this ggplot by gathering the data from the csv. I used the gradient fill on my chart to make the diagram pop - instead of having random colors with no correlation. It flows from darkest to light purple because the most counted category "at home" was most popular option to where people enjoyed their coffee. I initially had the percentage of where people made their coffee - but I concluded that viewing the total count of respondents would properly display the overal summary of where the participants make their coffee!
+
+```{r}
+
+where_drink <- data.frame(
+ Location = c("At home", "At the office", "At a cafe", "On the go", "None of these"),
+   Count = c(920, 360, 290, 180, 10))  # Actual counts of the total )
+
+ # Create the ggplot
+ggplot(where_drink, aes(x = reorder(Location, -Count), y = Count, fill = Count)) +
+  geom_bar(stat = "identity", color = "black") +  
+  geom_text(aes(label = Count), vjust = -0.2, size = 4.0) +  # Display total counts on each category 
+  labs(title = "Where do you Brew Coffee?", 
+      x = NULL,
+      y = "Total Respondents") +
   theme_minimal(base_size = 15) +
-  theme(
-    legend.position = "none"  
-  )
-
-
-
+  scale_fill_gradient(low = "Medium Purple 1", high = "Medium Purple 4") + #adjust the gradient
+  theme(legend.position = "none")
 ```
 
 
@@ -113,7 +105,9 @@ ggplot(coffee_data2, aes(x = reorder(Method, Percentage), y = Percentage, fill =
     x = NULL, y = "Percent of Respondents"
   ) +
   coord_flip() +
-  theme(legend.position = "none")
+theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "none")
 
 ```
 
@@ -135,7 +129,10 @@ ggplot(coffee_adds, aes(x = Percentage, y = reorder(CoffeeAdds, Percentage), fil
     x = "Percent of Respondents",
     y = ""
   ) +
-  theme_minimal() 
+theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "none"
+  )
 
 ```
 
@@ -149,16 +146,14 @@ ggplot(coffee_adds, aes(x = Percentage, y = reorder(CoffeeAdds, Percentage), fil
 ## Columbian beans
 * Coffee D -  light roast
 
-##Limitations 
-* Coffee rating is on a 1 to 5 scale. 
-* Ranking the preference of bitterness, acidity and preference.
+## Limitations 
+* Ranking the preference of bitterness, acidity and preference on scale of 1 to 5. 
 * No Coffee add ons are allowed on the test. 8oz of boiled water only.
-
 
 
 # What is the preference between Coffee A, B, or C?
 ```{r}
-coffee_survey %>%
+abc_pref <- coffee_survey %>%
   filter(!is.na(prefer_abc)) %>%
   ggplot(aes(x = prefer_abc, fill = prefer_abc)) +
   geom_bar() +
@@ -169,40 +164,59 @@ coffee_survey %>%
     x = NULL,
     y = "Count"
   ) +
-  theme_minimal()
-
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "none"
+  )
+print(abc_pref)
 ```
-  
 # What is the preference between Coffee A or D?
+
 ```{r}
-coffee_survey %>% 
+pref_ad <- coffee_survey %>%
   filter(!is.na(prefer_ad)) %>% 
-  ggplot(aes(x = prefer_ad, fill = prefer_ad)) + 
+  #plotting with ggplot 
+  ggplot(aes(x = prefer_ad, fill = prefer_ad)) +  
   geom_bar() + 
-  geom_text(stat = "count", aes(label = after_stat(count)), vjust = -0.5) + 
-  scale_fill_manual( values = c("tan", "peachpuff3"))+
-  labs( title = "Coffee Preference: A or D?",
+  geom_text(stat = "count", aes(label = after_stat(count)), vjust = -0.5) +  
+  scale_fill_manual(values = c("tan", "peachpuff3")) +  
+  labs(
+    title = "Coffee Preference: A or D?",
     x = NULL,
     y = "Count"
-  )
+  ) + 
+  theme_minimal(base_size = 14) +  
+  theme(legend.position = "none")  
 
-
+print(pref_ad)
+  
 ```
 
 # What is the most popular coffee?
+With these results, we can see that Coffee D is the most popular coffee between the other three options. Yes, the participants did favor light roasts in comparison to medium and dark roasts - but Coffee D is the most favorable. This is because Coffee D was processed natually which makes the light roast have a more fermented and fruity/funky taste. 
+
 ```{r}
- coffee_survey%>% 
- filter(!is.na(prefer_overall)) %>%
- ggplot(aes(prefer_overall)) +
- geom_bar(fill= c("tan", "tan3", "saddlebrown", "peachpuff3")) +
-  geom_text(stat = "count", aes(label = after_stat(count)), vjust = -0.5) + 
- labs(y='Count',
-      x = NULL,
-      title='Preferred Coffee Between A, B, C or D?')
+pref_abcd <- coffee_survey %>%
+  filter(!is.na(prefer_overall)) %>%  
+  ggplot(aes(prefer_overall)) +  
+  geom_bar(fill = c("tan", "tan3", "saddlebrown", "peachpuff3")) + #using custom colors to differentiate the different coffees
+  geom_text(stat = "count", aes(label = after_stat(count)), vjust = -0.5) +  
+  labs(
+    y = 'Count',
+    x = NULL,
+    title = 'Coffee Preference: A, B, C or D?'
+  ) +
+  theme(
+    legend.position = "none"  
+  )
 
 
+print(pref_abcd)
 ```
-# Summary 
-* 
+
+# Summary 🤩
+* In conclusion, Coffee D, was the most popular coffee. This coffee 
+* Light roasted coffee seems to be the most popular option in comparison to medium/dark roast 
+* Overall, this experiment was just for fun - seeing what is the most favored coffee :)
 
 
