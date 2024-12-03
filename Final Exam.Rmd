@@ -68,28 +68,27 @@ ggplot(where_drink, aes(x = reorder(Location, -Count), y = Count, fill = Count))
 
 
 # Why do they drink coffee?
+I kept this ggplot as percentage because I noticied that it made the diagram look more organized by showing the percentage of total reasons for why they drink coffee. As we can see, 94% enjoy the taste, and about half 50/50 drink coffee for the caffinee and because it's part of their ritual. 
 
 ```{r}
-why_coffee_counts <- coffee_survey %>%
-  filter(!is.na(why_drink)) %>% 
-  count(why_drink) 
-print(why_coffee_counts)
-
-# Create ggplot 
-ggplot(why_coffee_counts, aes(x = reorder(why_drink, -n), y = n, fill = n)) +
-  geom_bar(stat = "identity", width = 0.7, color = "black") +  
-  geom_text(aes(label = n), vjust = -0.5, size = 4.5) +  
-  labs(
-    title = "Why Do You Drink Coffee?",
-    x = NULL,
-    y = "Total Count"
-  ) +
-  scale_fill_gradient(low = "Dark Olive Green 1", high = "Dark Olive Green 4") +  # Color customize
-  theme_minimal(base_size = 14) +
-  theme(
-    legend.position = "none"  
-  )
-print(why_coffee_counts)
+why_coffee <- data.frame(
+  Reason = c("Tastes Good", "Caffeine", "Ritual", "To Poop", "Other"),
+   Percentage = c(94, 57, 54, 13, 5)
+ )
+ 
+ ggplot(why_coffee, aes(x = reorder(Reason, -Percentage), y = Percentage, fill = Percentage)) +
+   geom_bar(stat = "identity", width = 0.7, color = "black") +
+   geom_text(aes(label = paste0(Percentage, "%")), vjust = -0.5) + 
+   labs(#removed the title because the header it the title. 
+     x = NULL,
+     y = "Percent of Respondents"
+   ) +
+   scale_fill_gradient(low = "Dark Olive Green 4", high = "Dark Olive Green 1") + 
+   theme_minimal(base_size = 14) +
+   theme(
+     legend.position = "none"
+   )
+ 
 ```
 
 # How do they typically brew coffee?
@@ -104,7 +103,7 @@ coffee_data2 <- data.frame(
 
 ggplot(coffee_data2, aes(x = reorder(Method, Percentage), y = Percentage, fill = Percentage)) +
   geom_col(color = "black") +
-  scale_fill_gradient(low = "pink", high = "purple") +
+  scale_fill_gradient(low = "Orchid 1", high = "Orchid 4") +
   geom_text(aes(label = paste0(Percentage, "%")), hjust = -0.1, size = 4.5) +
   scale_y_continuous(limits = c(0, 70), expand = c(0, 0)) +
   labs(
@@ -220,6 +219,7 @@ pref_abcd <- coffee_survey %>%
 
 print(pref_abcd)
 ```
+
 
 # Summary 🤩
 * In conclusion, Coffee D, was the most popular coffee. This coffee 
